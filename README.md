@@ -1,10 +1,76 @@
-This Arduino project is about password protection. The user enters a password and one of two messages will display: "Password Correct!" for a correct entry or "Incorrect Password!" for an incorrect entry. It seems fairly self explanitory, however, there is more to it. I implemented an LED to alert users when the password has been entered incorrectly three times, and I am currently in the proccess of adding a buzzer to the project as well. 
+#include <Keypad.h>
 
-Requirements:
-  Hardware:
-    - a laptop with at least 256 MB of RAM, a CPU that's Pentium 4 or newer, and a USB-A port.
-  Software:
-    - you will need to download the Arduino IDE application to your computer
-      + in addition, you will need to upload the 1.8.6 Arduino AVR Boards through the application
-  Arduino Case:
-    - you will need the following components from the Arduino case: the breadboard, usb cable, controller board, 10 jumper wires (plus another 3 if you would like to add a buzzer), membrane switch module, an LED, and one         resistor (plus an active buzzer if you would like).
+const int ledPin = 13; 
+int wrongAttempts = 0;
+const int maxAttempts = 3;
+
+// rows and columns for keypad
+const byte ROWS = 4; 
+const byte COLS = 4; 
+char keys[ROWS][COLS] = {
+  {'1','2','3','A'},
+  {'4','5','6','B'},
+  {'7','8','9','C'},
+  {'*','0','#','D'}
+};
+byte rowPins[ROWS] = {9, 8, 7, 6}; 
+byte colPins[COLS] = {5, 4, 3, 2}; 
+
+Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
+
+char correctPassword[4] = {'2', '4', '0', '3'}; 
+char enteredPassword[4];
+int currentEntryIndex = 0;
+
+void setup(){
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, LOW);
+  Serial.begin(9600);
+}
+
+void loop(){
+  char key = keypad.getKey();
+
+  if (key){
+    Serial.println(key);
+
+    enteredPassword[currentEntryIndex] = key;
+    currentEntryIndex++;
+
+    // When 4 digits are entered, check the password
+    if (currentEntryIndex == 4){
+      checkPassword();
+      currentEntryIndex = 0; // Reset entry index for the next input
+    }
+  }
+}
+
+void checkPassword() {
+  bool isCorrect = true;
+
+  for (int i = 0; i < 4; i++){
+    if (enteredPassword[i] != correctPassword[i]){
+      isCorrect = false;
+      break;
+    }
+  }
+
+  if (isCorrect) {
+    Serial.println("Password Correct!");
+    wrongAttempts = 0; // Reset wrong attempts
+  } else {
+    wrongAttempts++;
+    Serial.println("Incorrect Password!");
+
+    if (wrongAttempts >= maxAttempts) {
+      lightUpLED(); // Light up the LED after 3 wrong attempts
+    }
+  }
+}
+
+void lightUpLED() {
+  Serial.println("Too many incorrect attempts. Lighting up the LED.");
+  digitalWrite(ledPin, HIGH); // Turn on LED
+  delay(5000);
+  digitalWrite(ledPin, LOW);
+}
