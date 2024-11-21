@@ -1,1 +1,40 @@
-https://illinoisstateuniversity-my.sharepoint.com/:w:/g/personal/ajpopae_ilstu_edu/Ea5dopm6uGdOuGzVSKl21FoBJnVXtxU-HklD5wvL5k_hlQ?e=NczuCY
+
+Arduino Password Project 
+Alex Popaeko 
+
+	This Arduino project is about password protection. The user enters a password, and one of two messages will display: "Password Correct!" for a correct entry or "Incorrect Password!" for an incorrect entry. It seems fairly self-explanatory, however, there is more to it. I implemented an LED to alert users when the password has been entered incorrectly three times, and I am currently in the process of adding a buzzer to the project as well.  
+
+Requirements: 
+
+  Hardware: 
+
+    - a laptop with at least 256 MB of RAM, a CPU that's Pentium 4 or newer, and a USB-A port. 
+
+  Software: 
+
+    - you will need to download the Arduino IDE application to your computer 
+
+      + in addition, you will need to upload the 1.8.6 Arduino AVR Boards through the application 
+
+  Arduino Case: 
+
+    - you will need the following components from the Arduino case: the breadboard, usb cable, controller board, 10 jumper wires (plus another 3 if you would like to add a buzzer), membrane switch module, an LED, and one resistor (plus an active buzzer if you would like).  
+
+In the link below are the images of my project (minus the buzzer since I did not get it working quite yet). Here are the steps of putting these components together: 
+
+		-First: take 8 jumper wires and connect the to the keypad (membrane switch module) 
+
+		-Second: connect the 8 jumper wires to pins 2 through 9 on the controller board 
+
+		-Third: place your LED horizontally anywhere on the breadboard 
+
+		- Fourth: place your resistor vertically on the breadboard, connecting one leg to the longer leg of the LED and the other to the positive bus on the breadboard 
+
+		-Fifth: use one of the last two jumper wires to connect to the shorter leg of the LED and in the same pin alignment as the LED, and connect the other end of the wire to pin number 13 (or any pin you would like to use 		for your code) 
+
+		-Sixth: use your last jumper wire to connect adjacently to the resistor leg in the positive bus, and the other end of the wire to the GND pin on the controller board 
+
+		-Seventh: use the images in the link to help clarify positioning of all these components 
+
+Link for images:
+  https://illinoisstateuniversity-my.sharepoint.com/:w:/g/personal/ajpopae_ilstu_edu/Ea5dopm6uGdOuGzVSKl21FoBJnVXtxU-HklD5wvL5k_hlQ?e=NczuCY
